@@ -1,0 +1,442 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		552F20A51B1D292B00AE69B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F20A41B1D292B00AE69B3 /* AppDelegate.swift */; };
+		552F20A71B1D292B00AE69B3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552F20A61B1D292B00AE69B3 /* Images.xcassets */; };
+		552F20AA1B1D292B00AE69B3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552F20A81B1D292B00AE69B3 /* MainMenu.xib */; };
+		552F20B61B1D292B00AE69B3 /* PingThingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F20B51B1D292B00AE69B3 /* PingThingTests.swift */; };
+		552F20C51B1D3F8E00AE69B3 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552F20C31B1D3F8E00AE69B3 /* PrefsViewController.swift */; };
+		559349001B1E97AF00176E8D /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 559348FF1B1E97AF00176E8D /* SimplePing.m */; };
+		559349021B1E99BF00176E8D /* PingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559349011B1E99BF00176E8D /* PingHelper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		552F20B01B1D292B00AE69B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 552F20971B1D292B00AE69B3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 552F209E1B1D292B00AE69B3;
+			remoteInfo = PingThing;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		552F209F1B1D292B00AE69B3 /* PingThing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PingThing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		552F20A31B1D292B00AE69B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		552F20A41B1D292B00AE69B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		552F20A61B1D292B00AE69B3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		552F20A91B1D292B00AE69B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		552F20AF1B1D292B00AE69B3 /* PingThingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PingThingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		552F20B41B1D292B00AE69B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		552F20B51B1D292B00AE69B3 /* PingThingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingThingTests.swift; sourceTree = "<group>"; };
+		552F20C31B1D3F8E00AE69B3 /* PrefsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
+		559348FD1B1E97AE00176E8D /* PingThing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PingThing-Bridging-Header.h"; sourceTree = "<group>"; };
+		559348FE1B1E97AF00176E8D /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
+		559348FF1B1E97AF00176E8D /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
+		559349011B1E99BF00176E8D /* PingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingHelper.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		552F209C1B1D292B00AE69B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		552F20AC1B1D292B00AE69B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		552F20961B1D292B00AE69B3 = {
+			isa = PBXGroup;
+			children = (
+				552F20A11B1D292B00AE69B3 /* PingThing */,
+				552F20B21B1D292B00AE69B3 /* PingThingTests */,
+				552F20A01B1D292B00AE69B3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		552F20A01B1D292B00AE69B3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				552F209F1B1D292B00AE69B3 /* PingThing.app */,
+				552F20AF1B1D292B00AE69B3 /* PingThingTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		552F20A11B1D292B00AE69B3 /* PingThing */ = {
+			isa = PBXGroup;
+			children = (
+				559349031B1EDDF000176E8D /* SimplePing */,
+				559349011B1E99BF00176E8D /* PingHelper.swift */,
+				552F20A41B1D292B00AE69B3 /* AppDelegate.swift */,
+				552F20C31B1D3F8E00AE69B3 /* PrefsViewController.swift */,
+				552F20A81B1D292B00AE69B3 /* MainMenu.xib */,
+				552F20A21B1D292B00AE69B3 /* Supporting Files */,
+				559348FD1B1E97AE00176E8D /* PingThing-Bridging-Header.h */,
+			);
+			path = PingThing;
+			sourceTree = "<group>";
+		};
+		552F20A21B1D292B00AE69B3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				552F20A61B1D292B00AE69B3 /* Images.xcassets */,
+				552F20A31B1D292B00AE69B3 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		552F20B21B1D292B00AE69B3 /* PingThingTests */ = {
+			isa = PBXGroup;
+			children = (
+				552F20B51B1D292B00AE69B3 /* PingThingTests.swift */,
+				552F20B31B1D292B00AE69B3 /* Supporting Files */,
+			);
+			path = PingThingTests;
+			sourceTree = "<group>";
+		};
+		552F20B31B1D292B00AE69B3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				552F20B41B1D292B00AE69B3 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		559349031B1EDDF000176E8D /* SimplePing */ = {
+			isa = PBXGroup;
+			children = (
+				559348FE1B1E97AF00176E8D /* SimplePing.h */,
+				559348FF1B1E97AF00176E8D /* SimplePing.m */,
+			);
+			name = SimplePing;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		552F209E1B1D292B00AE69B3 /* PingThing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 552F20B91B1D292B00AE69B3 /* Build configuration list for PBXNativeTarget "PingThing" */;
+			buildPhases = (
+				552F209B1B1D292B00AE69B3 /* Sources */,
+				552F209C1B1D292B00AE69B3 /* Frameworks */,
+				552F209D1B1D292B00AE69B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PingThing;
+			productName = PingThing;
+			productReference = 552F209F1B1D292B00AE69B3 /* PingThing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		552F20AE1B1D292B00AE69B3 /* PingThingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 552F20BC1B1D292B00AE69B3 /* Build configuration list for PBXNativeTarget "PingThingTests" */;
+			buildPhases = (
+				552F20AB1B1D292B00AE69B3 /* Sources */,
+				552F20AC1B1D292B00AE69B3 /* Frameworks */,
+				552F20AD1B1D292B00AE69B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				552F20B11B1D292B00AE69B3 /* PBXTargetDependency */,
+			);
+			name = PingThingTests;
+			productName = PingThingTests;
+			productReference = 552F20AF1B1D292B00AE69B3 /* PingThingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		552F20971B1D292B00AE69B3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "DiUS Computing Pty Ltd";
+				TargetAttributes = {
+					552F209E1B1D292B00AE69B3 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					552F20AE1B1D292B00AE69B3 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = 552F209E1B1D292B00AE69B3;
+					};
+				};
+			};
+			buildConfigurationList = 552F209A1B1D292B00AE69B3 /* Build configuration list for PBXProject "PingThing" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 552F20961B1D292B00AE69B3;
+			productRefGroup = 552F20A01B1D292B00AE69B3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				552F209E1B1D292B00AE69B3 /* PingThing */,
+				552F20AE1B1D292B00AE69B3 /* PingThingTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		552F209D1B1D292B00AE69B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				552F20A71B1D292B00AE69B3 /* Images.xcassets in Resources */,
+				552F20AA1B1D292B00AE69B3 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		552F20AD1B1D292B00AE69B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		552F209B1B1D292B00AE69B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				559349021B1E99BF00176E8D /* PingHelper.swift in Sources */,
+				552F20A51B1D292B00AE69B3 /* AppDelegate.swift in Sources */,
+				552F20C51B1D3F8E00AE69B3 /* PrefsViewController.swift in Sources */,
+				559349001B1E97AF00176E8D /* SimplePing.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		552F20AB1B1D292B00AE69B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				552F20B61B1D292B00AE69B3 /* PingThingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		552F20B11B1D292B00AE69B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 552F209E1B1D292B00AE69B3 /* PingThing */;
+			targetProxy = 552F20B01B1D292B00AE69B3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		552F20A81B1D292B00AE69B3 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				552F20A91B1D292B00AE69B3 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		552F20B71B1D292B00AE69B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		552F20B81B1D292B00AE69B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		552F20BA1B1D292B00AE69B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PingThing/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PingThing/PingThing-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		552F20BB1B1D292B00AE69B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = PingThing/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PingThing/PingThing-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		552F20BD1B1D292B00AE69B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PingThingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PingThing.app/Contents/MacOS/PingThing";
+			};
+			name = Debug;
+		};
+		552F20BE1B1D292B00AE69B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PingThingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PingThing.app/Contents/MacOS/PingThing";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		552F209A1B1D292B00AE69B3 /* Build configuration list for PBXProject "PingThing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				552F20B71B1D292B00AE69B3 /* Debug */,
+				552F20B81B1D292B00AE69B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		552F20B91B1D292B00AE69B3 /* Build configuration list for PBXNativeTarget "PingThing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				552F20BA1B1D292B00AE69B3 /* Debug */,
+				552F20BB1B1D292B00AE69B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		552F20BC1B1D292B00AE69B3 /* Build configuration list for PBXNativeTarget "PingThingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				552F20BD1B1D292B00AE69B3 /* Debug */,
+				552F20BE1B1D292B00AE69B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 552F20971B1D292B00AE69B3 /* Project object */;
+}
