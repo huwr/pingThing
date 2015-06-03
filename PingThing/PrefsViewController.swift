@@ -20,7 +20,7 @@ class PrefsViewController: NSViewController {
                 statusTextField.stringValue = status.rawValue
                 switch status {
                 case .Success:
-                    statusTextField.textColor = NSColor.greenColor()
+                    statusTextField.textColor = NSColor(calibratedRed: 0, green: 149, blue: 16, alpha: 0)
                 case .Failure:
                     statusTextField.textColor = NSColor.orangeColor()
                 case .Error:
