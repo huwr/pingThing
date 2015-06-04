@@ -269,9 +269,8 @@ static uint16_t in_cksum(const void *buffer, size_t bufferLen)
     if ( (bytesSent > 0) && (((NSUInteger) bytesSent) == [packet length]) ) {
 
         // Complete success.  Tell the client.
-
-        if ( (self.delegate != nil) && [self.delegate respondsToSelector:@selector(simplePing:didSendPacket:)] ) {
-            [self.delegate simplePing:self didSendPacket:packet];
+        if ( (self.delegate != nil) && [self.delegate respondsToSelector:@selector(simplePing:didSendPacket:withSequenceNumber:)] ) {
+            [self.delegate simplePing:self didSendPacket:packet withSequenceNumber:icmpPtr->sequenceNumber];
         }
     } else {
         NSError *   error;

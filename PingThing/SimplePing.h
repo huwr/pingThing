@@ -117,14 +117,14 @@
 // On the receive side, it does.  In that case, use +[SimplePing icmpInPacket:] 
 // to find the ICMP header within the packet.
 
-- (void)simplePing:(SimplePing *)pinger didSendPacket:(NSData *)packet;
+- (void)simplePing:(SimplePing *)pinger didSendPacket:(NSData *)packet withSequenceNumber:(uint16_t)sequenceNumber;
     // Called whenever the SimplePing object has successfully sent a ping packet. 
     
 - (void)simplePing:(SimplePing *)pinger didFailToSendPacket:(NSData *)packet error:(NSError *)error;
     // Called whenever the SimplePing object tries and fails to send a ping packet.
 
 - (void)simplePing:(SimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet;
-    // Called whenever the SimplePing object receives an ICMP packet that looks like 
+    // Called whenever the SimplePing object receives an ICMP packet that looks like
     // a response to one of our pings (that is, has a valid ICMP checksum, has 
     // an identifier that matches our identifier, and has a sequence number in 
     // the range of sequence numbers that we've sent out).

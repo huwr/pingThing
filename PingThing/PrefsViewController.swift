@@ -87,7 +87,7 @@ class PrefsViewController: NSViewController {
     }
     
     private func listenToPings(onPingHelper pingHelper: PingHelper) {
-        NSNotificationCenter.defaultCenter().addObserverForName(PingReceivedNotification,
+        NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
             object: pingHelper,
             queue: NSOperationQueue.mainQueue()) { [weak self] notification in
                 if let strongSelf = self {

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-let PingReceivedNotification = "ping-received-notification"
+let StatusChangedNotification = "status-changed-notification"
 let PingStoppedNotification = "ping-stopped-notification"
 let PingStartedNotification = "ping-started-notification"
 
@@ -23,7 +23,39 @@ enum Status: String {
 class PingHelper: NSObject {
     var simplePing: SimplePing?
     private var pingTimer: NSTimer?
+    private var lastSequenceSent: UInt16?
+    private var lastSentTime: NSDate?
+    var maxLagTimes = 10
+    var lagTimes = [Double?]()
+    private var lastLag: Double? {
+        didSet {
+            lagTimes.append(lastLag)
+            if lagTimes.count > maxLagTimes {
+                lagTimes.removeRange(0..<(lagTimes.count - maxLagTimes))
+            }
+        }
+    }
 
+    var averageLag: Double? {
+        get {
+            let filteredArray = lagTimes.filter { $0 != nil }
+            
+            if filteredArray.count == 0 {
+                return nil
+            }
+            
+            return Double(filteredArray.reduce(0.0) { $0 + $1! }) / Double(filteredArray.count)
+        }
+    }
+    
+    var dropOutRate: Double {
+        if lagTimes.count == 0 {
+            return 0
+        }
+        let dropOuts = lagTimes.filter { $0 == nil }.count
+        return Double(dropOuts) / Double(lagTimes.count)
+    }
+    
     private(set) var running = false {
         didSet {
             if running {
@@ -36,7 +68,7 @@ class PingHelper: NSObject {
 
     private(set) var status = Status.Unknown {
         didSet {
-            NSNotificationCenter.defaultCenter().postNotificationName(PingReceivedNotification, object: self)
+            NSNotificationCenter.defaultCenter().postNotificationName(StatusChangedNotification, object: self)
         }
     }
     
@@ -106,8 +138,13 @@ extension PingHelper: SimplePingDelegate {
         println("failed with error: \(error)")
     }
     
-    func simplePing(pinger: SimplePing!, didSendPacket packet: NSData!) {
-        println("ping!")
+    func simplePing(pinger: SimplePing!, didSendPacket packet: NSData!, withSequenceNumber sequenceNumber:UInt16) {
+        let seqNo = CFSwapInt16BigToHost(sequenceNumber)
+        
+        lastSequenceSent = seqNo
+        lastSentTime = NSDate()
+        
+        println("ping \(seqNo)")
     }
     
     func simplePing(pinger: SimplePing!, didFailToSendPacket packet: NSData!, error: NSError!) {
@@ -117,7 +154,17 @@ extension PingHelper: SimplePingDelegate {
     
     func simplePing(pinger: SimplePing!, didReceivePingResponsePacket packet: NSData!) {
         status = Status.Success
-        println("pong!");
+        
+        let seqNo = CFSwapInt16BigToHost(SimplePing.icmpInPacket(packet).memory.sequenceNumber)
+        
+        if seqNo < lastSequenceSent {
+            println("out of order")
+        } else {
+            if let lastTime = lastSentTime {
+                lastLag = NSDate().timeIntervalSinceDate(lastTime) * 1_000
+                println("pong \(seqNo) lat \(lastLag)")
+            }
+        }
     }
     
     func simplePing(pinger: SimplePing!, didReceiveUnexpectedPacket packet: NSData!) {
