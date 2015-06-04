@@ -22,7 +22,6 @@ enum Status: String {
 
 class PingHelper: NSObject {
     var simplePing: SimplePing?
-    var interval = 2.0 /* secs */
     private var pingTimer: NSTimer?
 
     private(set) var running = false {
@@ -38,6 +37,12 @@ class PingHelper: NSObject {
     private(set) var status = Status.Unknown {
         didSet {
             NSNotificationCenter.defaultCenter().postNotificationName(PingReceivedNotification, object: self)
+        }
+    }
+    
+    var interval = 2.0 { /* secs */
+        didSet {
+            restart()
         }
     }
     

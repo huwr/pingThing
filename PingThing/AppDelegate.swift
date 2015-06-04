@@ -9,6 +9,7 @@
 import Cocoa
 
 let TargetHostUserDefaultsKey = "target-host"
+let PingIntervalUserDefaultsKey = "ping-interval"
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

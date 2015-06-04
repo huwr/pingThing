@@ -9,9 +9,10 @@
 import Cocoa
 
 class PrefsViewController: NSViewController {
-    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var targetHostTextField: NSTextField!
     @IBOutlet weak var saveHostButton: NSButton!
     @IBOutlet weak var statusTextField: NSTextField!
+    @IBOutlet weak var intervalTextField: NSTextField!
     @IBOutlet weak var startStopButton: NSButtonCell!
     
     var currentStatus: Status? {
@@ -32,22 +33,24 @@ class PrefsViewController: NSViewController {
         }
     }
     
+    @IBAction func intervalTextFieldChanged(sender: NSTextField) {
+        AppDelegate.pingHelper.interval = intervalTextField.doubleValue
+        savePrefs()
+    }
+    
     @IBAction func quit(sender: AnyObject) {
         NSApplication.sharedApplication().terminate(self)
     }
     
-    @IBAction func textFieldChanged(sender: NSTextField) {
+    @IBAction func targetHostTextFieldChanged(sender: NSTextField) {
         saveHostButton.performClick(self)
     }
     
     @IBAction func saveHostButtonPressed(sender: NSButton) {
         statusTextField.stringValue = "Starting…"
         statusTextField.textColor = NSColor.blackColor()
-        AppDelegate.pingHelper.host = textField.stringValue
-        
-        let prefs = NSUserDefaults.standardUserDefaults()
-        prefs.setObject(AppDelegate.pingHelper.host, forKey: TargetHostUserDefaultsKey)
-        prefs.synchronize()
+        AppDelegate.pingHelper.host = targetHostTextField.stringValue
+        savePrefs()
     }
     
     @IBAction func startStopButtonPressed(sender: NSButtonCell) {
@@ -70,8 +73,8 @@ class PrefsViewController: NSViewController {
     override func viewWillAppear() {
         listenToPings(onPingHelper: AppDelegate.pingHelper)
         updateStatusFromHelper()
-        textField.stringValue = AppDelegate.pingHelper.host
-        
+        targetHostTextField.stringValue = AppDelegate.pingHelper.host
+        intervalTextField.doubleValue = AppDelegate.pingHelper.interval
     }
     
     override func viewWillDisappear() {
@@ -107,6 +110,13 @@ class PrefsViewController: NSViewController {
                     strongSelf.updateStatusFromHelper()
                 }
         }
+    }
+    
+    private func savePrefs() {
+        let prefs = NSUserDefaults.standardUserDefaults()
+        prefs.setObject(AppDelegate.pingHelper.host, forKey: TargetHostUserDefaultsKey)
+        prefs.setObject(AppDelegate.pingHelper.interval, forKey: PingIntervalUserDefaultsKey)
+        prefs.synchronize()
     }
     
 }
