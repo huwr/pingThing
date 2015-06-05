@@ -112,7 +112,6 @@ class PingHelper: NSObject {
     }
     
     func sendPing() {
-        println("sending ping")
         if let pinger = simplePing {
             pinger.sendPingWithData(nil)
         }
@@ -128,7 +127,6 @@ extension PingHelper: SimplePingDelegate {
     }
     
     func simplePing(pinger: SimplePing!, didFailWithError error: NSError!) {
-        //everything's ruined.
         status = Status.Failure
         println("failed with error: \(error)")
     }
@@ -138,8 +136,6 @@ extension PingHelper: SimplePingDelegate {
         
         lastSequenceSent = seqNo
         lastSentTime = NSDate()
-        
-        println("ping \(seqNo)")
     }
     
     func simplePing(pinger: SimplePing!, didFailToSendPacket packet: NSData!, error: NSError!) {
@@ -157,7 +153,7 @@ extension PingHelper: SimplePingDelegate {
         } else {
             if let lastTime = lastSentTime {
                 lastLag = NSDate().timeIntervalSinceDate(lastTime) * 1_000
-                println("pong \(seqNo) lat \(lastLag)")
+                println("pong \(seqNo) - lag \(lastLag)")
             }
         }
     }
