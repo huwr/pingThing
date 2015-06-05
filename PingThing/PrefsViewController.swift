@@ -83,9 +83,8 @@ class PrefsViewController: NSViewController {
         
         if let helper = pingHelper {
             listenToPings(onPingHelper: helper)
-            updateStatus(fromHelper: helper)
-            targetHostTextField.stringValue = helper.host
-            intervalTextField.doubleValue = helper.interval
+            self.updateViewControls(fromPingHelper: helper)
+            self.updateViewStatus(fromPingHelper: helper)
         }
     }
     
@@ -95,35 +94,34 @@ class PrefsViewController: NSViewController {
         }
     }
     
-    private func updateStatus(fromHelper helper: PingHelper) {
-        self.currentStatus = helper.status
-        self.startStopButton.title = helper.running ? "Stop" : "Start"
+    private func updateViewStatus(fromPingHelper pingHelper: PingHelper) {
+        currentStatus = pingHelper.status
+        startStopButton.title = pingHelper.running ? "Stop" : "Start"
     }
     
-    private func listenToPings(onPingHelper helper: PingHelper) {
+    private func updateViewControls(fromPingHelper pingHelper: PingHelper) {
+        targetHostTextField.stringValue = pingHelper.host
+        intervalTextField.doubleValue = pingHelper.interval
+    }
+    
+    private func listenToPings(onPingHelper pingHelper: PingHelper) {
         NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
-            object: helper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateStatus(fromHelper: helper)
-                }
-        }
+            object: pingHelper,
+            queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
+                self.updateViewStatus(fromPingHelper: pingHelper)
+            }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PingStartedNotification,
-            object: helper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateStatus(fromHelper: helper)
-                }
-        }
+            object: pingHelper,
+            queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
+                self.updateViewStatus(fromPingHelper: pingHelper)
+            }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PingStoppedNotification,
-            object: helper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateStatus(fromHelper: helper)
-                }
-        }
+            object: pingHelper,
+            queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
+                self.updateViewStatus(fromPingHelper: pingHelper)
+            }
     }
     
     private func savePrefs(fromPingHelper helper: PingHelper, usingDefaults defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
