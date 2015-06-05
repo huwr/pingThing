@@ -21,26 +21,34 @@ enum Status: String {
 }
 
 class PingHelper: NSObject {
-    var interval: Double
+    static let DefaultHost = "8.8.8.8"
+    static let DefaultInterval = 2.0
+    static let DefaultNumberOfSamples = 10
+    
     var host: String
+    var interval: Double
+    var numberOfSamples: Int
     
     var simplePing: SimplePing?
     private var pingTimer: NSTimer?
     private var lastSequenceSent: UInt16?
     private var lastSentTime: NSDate?
-    var maxLagTimes = 10
     var lagTimes = [Double?]()
     private var lastLag: Double? {
         didSet {
             lagTimes.append(lastLag)
-            if lagTimes.count > maxLagTimes {
-                lagTimes.removeRange(0..<(lagTimes.count - maxLagTimes))
+            if lagTimes.count > numberOfSamples {
+                lagTimes.removeRange(0..<(lagTimes.count - numberOfSamples))
             }
         }
     }
 
     var averageLag: Double? {
         get {
+            if !self.running {
+                return nil
+            }
+            
             let filteredArray = lagTimes.filter { $0 != nil }
             
             if filteredArray.count == 0 {
@@ -51,7 +59,10 @@ class PingHelper: NSObject {
         }
     }
     
-    var dropOutRate: Double {
+    var dropOutRate: Double? {
+        if !self.running {
+            return nil
+        }
         if lagTimes.count == 0 {
             return 0
         }
@@ -75,9 +86,10 @@ class PingHelper: NSObject {
         }
     }
     
-    init(host: String, interval: Double) {
+    init(host: String = DefaultHost, interval: Double = DefaultInterval, numberOfSamples: Int = DefaultNumberOfSamples) {
         self.host = host
         self.interval = interval
+        self.numberOfSamples = numberOfSamples
     }
     
     func start() {
@@ -154,6 +166,7 @@ extension PingHelper: SimplePingDelegate {
             if let lastTime = lastSentTime {
                 lastLag = NSDate().timeIntervalSinceDate(lastTime) * 1_000
                 println("pong \(seqNo) - lag \(lastLag)")
+                println("running average: \(averageLag)")
             }
         }
     }

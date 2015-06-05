@@ -11,9 +11,11 @@ import Cocoa
 class PrefsViewController: NSViewController {
     @IBOutlet weak var targetHostTextField: NSTextField!
     @IBOutlet weak var saveHostButton: NSButton!
-    @IBOutlet weak var statusTextField: NSTextField!
     @IBOutlet weak var intervalTextField: NSTextField!
     @IBOutlet weak var startStopButton: NSButtonCell!
+    @IBOutlet weak var statusTextField: NSTextField!
+    @IBOutlet weak var lagTextField: NSTextField!
+    @IBOutlet weak var packetLossTextField: NSTextField!
     
     var currentStatus: Status? {
         didSet {
@@ -29,6 +31,30 @@ class PrefsViewController: NSViewController {
                 default:
                     statusTextField.textColor = NSColor.blackColor()
                 }
+            }
+        }
+    }
+    
+    var currentLag: Double? {
+        didSet {
+            if let lag = currentLag {
+                lagTextField.stringValue = String(format: "%.3f ms", lag)
+                lagTextField.textColor = NSColor.blackColor()
+            } else {
+                lagTextField.stringValue = "No data"
+                lagTextField.textColor = NSColor.darkGrayColor()
+            }
+        }
+    }
+    
+    var currentLoss: Double? {
+        didSet {
+            if let loss = currentLoss {
+                packetLossTextField.stringValue = String(format: "%3.2f%%", loss * 100)
+                packetLossTextField.textColor = NSColor.blackColor()
+            } else {
+                packetLossTextField.stringValue = "No data"
+                packetLossTextField.textColor = NSColor.darkGrayColor()
             }
         }
     }
@@ -96,6 +122,8 @@ class PrefsViewController: NSViewController {
     
     private func updateViewStatus(fromPingHelper pingHelper: PingHelper) {
         currentStatus = pingHelper.status
+        currentLag = pingHelper.averageLag
+        currentLoss = pingHelper.dropOutRate
         startStopButton.title = pingHelper.running ? "Stop" : "Start"
     }
     

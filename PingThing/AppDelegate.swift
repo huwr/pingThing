@@ -20,8 +20,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let StatusMenuItemTag = 0
     let StartStopMenuItemTag = 1
     
-    var host: String = "8.8.8.8"
-    var interval: Double = 2.0
+    var host: String = PingHelper.DefaultHost
+    var interval: Double = PingHelper.DefaultInterval
     
     private(set)
     var pingHelper: PingHelper?
