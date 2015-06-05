@@ -33,9 +33,14 @@ class PrefsViewController: NSViewController {
         }
     }
     
+    var pingHelper: PingHelper?
+    
     @IBAction func intervalTextFieldChanged(sender: NSTextField) {
-        AppDelegate.pingHelper.interval = intervalTextField.doubleValue
-        savePrefs()
+        if let helper = pingHelper {
+            helper.interval = intervalTextField.doubleValue
+            helper.start()
+            savePrefs(fromPingHelper: helper)
+        }
     }
     
     @IBAction func quit(sender: AnyObject) {
@@ -47,17 +52,22 @@ class PrefsViewController: NSViewController {
     }
     
     @IBAction func saveHostButtonPressed(sender: NSButton) {
-        statusTextField.stringValue = "Starting…"
-        statusTextField.textColor = NSColor.blackColor()
-        AppDelegate.pingHelper.host = targetHostTextField.stringValue
-        savePrefs()
+        if let helper = pingHelper {
+            statusTextField.stringValue = "Starting…"
+            statusTextField.textColor = NSColor.blackColor()
+            helper.host = targetHostTextField.stringValue
+            helper.start()
+            savePrefs(fromPingHelper: helper)
+        }
     }
     
     @IBAction func startStopButtonPressed(sender: NSButtonCell) {
-        if AppDelegate.pingHelper.running {
-            AppDelegate.pingHelper.stop()
-        } else {
-            AppDelegate.pingHelper.start()
+        if let helper = pingHelper {
+            if helper.running {
+                helper.stop()
+            } else {
+                helper.start()
+            }
         }
     }
     
@@ -66,57 +76,60 @@ class PrefsViewController: NSViewController {
         println("Value: \(sender.state)")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear() {
-        listenToPings(onPingHelper: AppDelegate.pingHelper)
-        updateStatusFromHelper()
-        targetHostTextField.stringValue = AppDelegate.pingHelper.host
-        intervalTextField.doubleValue = AppDelegate.pingHelper.interval
+        if let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate {
+            pingHelper = appDelegate.pingHelper
+        }
+        
+        if let helper = pingHelper {
+            listenToPings(onPingHelper: helper)
+            updateStatus(fromHelper: helper)
+            targetHostTextField.stringValue = helper.host
+            intervalTextField.doubleValue = helper.interval
+        }
     }
     
     override func viewWillDisappear() {
-        NSNotificationCenter.defaultCenter().removeObserver(AppDelegate.pingHelper)
+        if let helper = pingHelper {
+            NSNotificationCenter.defaultCenter().removeObserver(helper)
+        }
     }
     
-    private func updateStatusFromHelper() {
-        self.currentStatus = AppDelegate.pingHelper.status
-        self.startStopButton.title = AppDelegate.pingHelper.running ? "Stop" : "Start"
+    private func updateStatus(fromHelper helper: PingHelper) {
+        self.currentStatus = helper.status
+        self.startStopButton.title = helper.running ? "Stop" : "Start"
     }
     
-    private func listenToPings(onPingHelper pingHelper: PingHelper) {
+    private func listenToPings(onPingHelper helper: PingHelper) {
         NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
-            object: pingHelper,
+            object: helper,
             queue: NSOperationQueue.mainQueue()) { [weak self] notification in
                 if let strongSelf = self {
-                    strongSelf.updateStatusFromHelper()
+                    strongSelf.updateStatus(fromHelper: helper)
                 }
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PingStartedNotification,
-            object: pingHelper,
+            object: helper,
             queue: NSOperationQueue.mainQueue()) { [weak self] notification in
                 if let strongSelf = self {
-                    strongSelf.updateStatusFromHelper()
+                    strongSelf.updateStatus(fromHelper: helper)
                 }
         }
         
         NSNotificationCenter.defaultCenter().addObserverForName(PingStoppedNotification,
-            object: pingHelper,
+            object: helper,
             queue: NSOperationQueue.mainQueue()) { [weak self] notification in
                 if let strongSelf = self {
-                    strongSelf.updateStatusFromHelper()
+                    strongSelf.updateStatus(fromHelper: helper)
                 }
         }
     }
     
-    private func savePrefs() {
-        let prefs = NSUserDefaults.standardUserDefaults()
-        prefs.setObject(AppDelegate.pingHelper.host, forKey: TargetHostUserDefaultsKey)
-        prefs.setObject(AppDelegate.pingHelper.interval, forKey: PingIntervalUserDefaultsKey)
-        prefs.synchronize()
+    private func savePrefs(fromPingHelper helper: PingHelper, usingDefaults defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
+        defaults.setObject(helper.host, forKey: TargetHostUserDefaultsKey)
+        defaults.setObject(helper.interval, forKey: PingIntervalUserDefaultsKey)
+        defaults.synchronize()
     }
     
 }

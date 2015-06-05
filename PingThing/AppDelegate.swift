@@ -20,8 +20,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let StatusMenuItemTag = 0
     let StartStopMenuItemTag = 1
     
-    static let pingHelper = PingHelper()
     var host: String = "8.8.8.8"
+    var interval: Double = 2.0
+    
+    private(set)
+    var pingHelper: PingHelper?
     
     @IBOutlet weak var window: NSWindow!
 
@@ -32,42 +35,75 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.image = NSImage(named: "StatusBarPaused")
         }
         
-        statusItem.menu = createMenu()
-        listenToPings(onPingHelper: AppDelegate.pingHelper)
-    }
-    
-    func checkUserDefaultsAndLoad() {
-        let prefs = NSUserDefaults.standardUserDefaults()
-        if let hostFromPrefs = prefs.objectForKey(TargetHostUserDefaultsKey) as? String {
-            AppDelegate.pingHelper.host = hostFromPrefs
+        self.pingHelper = PingHelper(host: host, interval: interval)
+        
+        if let helper = self.pingHelper {
+            statusItem.menu = buildMenu(helper)
+            listenToPings(helper)
+            helper.start()
         }
     }
     
-    func createMenu() -> NSMenu {
+    func checkUserDefaultsAndLoad(defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
+        if let hostFromPrefs = defaults.objectForKey(TargetHostUserDefaultsKey) as? String {
+            self.host = hostFromPrefs
+        }
+        if let intervalFromPrefs = defaults.objectForKey(PingIntervalUserDefaultsKey) as? Double {
+            self.interval = intervalFromPrefs
+        }
+    }
+    
+    private func buildMenu(helper: PingHelper) -> NSMenu {
         let menu = NSMenu()
         
-        let startStopMenuTitle = AppDelegate.pingHelper.running ? "Stop" : "Start"
-        let status = AppDelegate.pingHelper.status
+        let startStopMenuTitle = helper.running ? "Stop" : "Start"
         
-        let statusMenuItem = NSMenuItem(title: "Status: \(status)", action: nil, keyEquivalent: "")
+        let statusMenuItem = NSMenuItem(title: "Status: \(helper.status)", action: nil, keyEquivalent: "")
         statusMenuItem.tag = StatusMenuItemTag
         
         let startStopMenuItem = NSMenuItem(title: startStopMenuTitle,  action: Selector("startStopPing:"), keyEquivalent: "")
+        startStopMenuItem.representedObject = helper
         startStopMenuItem.tag = StartStopMenuItemTag
         
         menu.addItem(statusMenuItem)
         menu.addItem(NSMenuItem.separatorItem())
         menu.addItem(startStopMenuItem)
-        menu.addItem(NSMenuItem(title: "Preferences…", action: Selector("openPrefs:"), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Preferences…", action: Selector("openPrefsWindow:"), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separatorItem())
         menu.addItem(NSMenuItem(title: "Quit PingThing", action: Selector("terminate:"), keyEquivalent: ""))
         
         return menu
     }
     
-    private func updateMenus() {
+    private func listenToPings(helper: PingHelper) {
+        NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
+            object: helper,
+            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
+                if let strongSelf = self {
+                    strongSelf.updateMenus(fromHelper: helper)
+                }
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(PingStartedNotification,
+            object: helper,
+            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
+                if let strongSelf = self {
+                    strongSelf.updateMenus(fromHelper: helper)
+                }
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(PingStoppedNotification,
+            object: helper,
+            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
+                if let strongSelf = self {
+                    strongSelf.updateMenus(fromHelper: helper)
+                }
+        }
+    }
+    
+    private func updateMenus(fromHelper helper: PingHelper) {
         if let button = statusItem.button {
-            switch AppDelegate.pingHelper.status {
+            switch helper.status {
             case Status.Success:
                 button.image = NSImage(named: "StatusBarTick")
             case Status.NotRunning:
@@ -81,46 +117,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let menu = statusItem.menu {
             if let statusMenu = menu.itemWithTag(StatusMenuItemTag) {
-                statusMenu.title = "Status: \(AppDelegate.pingHelper.status.rawValue)"
+                statusMenu.title = "Status: \(helper.status.rawValue)"
             }
             
             if let startStopMenu = menu.itemWithTag(StartStopMenuItemTag) {
-                startStopMenu.title = AppDelegate.pingHelper.running ? "Stop" : "Start"
+                startStopMenu.title = helper.running ? "Stop" : "Start"
             }
-        }
-    }
-    
-    private func listenToPings(onPingHelper pingHelper: PingHelper) {
-        NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
-            object: pingHelper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateMenus()
-                }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PingStartedNotification,
-            object: pingHelper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateMenus()
-                }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PingStoppedNotification,
-            object: pingHelper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateMenus()
-                }
         }
     }
     
     func startStopPing(sender: NSMenuItem) {
-        AppDelegate.pingHelper.running ? AppDelegate.pingHelper.stop() : AppDelegate.pingHelper.start()
+        if let helper = sender.representedObject as? PingHelper {
+            helper.running ? helper.stop() : helper.start()
+        }
     }
     
-    func openPrefs(sender: AnyObject) {
+    func openPrefsWindow(sender: AnyObject) {
         window.makeKeyAndOrderFront(self)
         NSApp.activateIgnoringOtherApps(true)
     }

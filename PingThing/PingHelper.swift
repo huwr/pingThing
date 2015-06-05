@@ -21,6 +21,9 @@ enum Status: String {
 }
 
 class PingHelper: NSObject {
+    var interval: Double
+    var host: String
+    
     var simplePing: SimplePing?
     private var pingTimer: NSTimer?
     private var lastSequenceSent: UInt16?
@@ -72,24 +75,16 @@ class PingHelper: NSObject {
         }
     }
     
-    var interval = 2.0 { /* secs */
-        didSet {
-            restart()
-        }
-    }
-    
-    var host: String = "" {
-        didSet {
-            restart()
-        }
-    }
-    
-    func restart() {
-        stop()
-        start()
+    init(host: String, interval: Double) {
+        self.host = host
+        self.interval = interval
     }
     
     func start() {
+        if self.running {
+            stop()
+        }
+        
         println("starting…")
         status = Status.Unknown
         simplePing = SimplePing(hostName: host)
