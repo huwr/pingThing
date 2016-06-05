@@ -13,7 +13,6 @@ Known Issues
 ------------
 
 * The 'Launch at Login' checkbox is not implemented - you will have to add it to your Login Items in System Preferences manually.
-* No icon for the app...
 
 Future Plans
 ------------
