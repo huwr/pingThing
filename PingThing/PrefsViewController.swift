@@ -140,23 +140,13 @@ class PrefsViewController: NSViewController {
     }
     
     private func listenToPings(onPingHelper pingHelper: PingHelper) {
-        NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
-            object: pingHelper,
-            queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
-                self.updateViewStatus(fromPingHelper: pingHelper)
-            }
         
-        NSNotificationCenter.defaultCenter().addObserverForName(PingStartedNotification,
-            object: pingHelper,
-            queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
-                self.updateViewStatus(fromPingHelper: pingHelper)
+        [StatusChangedNotification, PingStartedNotification, PingStoppedNotification].forEach { notification in
+            NSNotificationCenter.defaultCenter().addObserverForName(notification, object: pingHelper,
+                queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
+                    self.updateViewStatus(fromPingHelper: pingHelper)
             }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PingStoppedNotification,
-            object: pingHelper,
-            queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
-                self.updateViewStatus(fromPingHelper: pingHelper)
-            }
+        }
     }
     
     private func savePrefs(fromPingHelper helper: PingHelper, usingDefaults defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
