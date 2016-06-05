@@ -7,7 +7,7 @@ A little Mac app that sits in your menu bar and pings things.  It does not do ve
 
 Get it [here](https://github.com/huwr/pingThing/releases)!
 
-The app is mostly written in Swift.  The ICMP SimplePing part is written in Objective-C and is a slightly modified version of the ADC sample code.  Icons are designed by Freepik, although I'm still wanting one for the main app icon.
+The app is mostly written in Swift.  The ICMP SimplePing part is written in Objective-C and is a slightly modified version of the ADC sample code.  Icons are designed by Freepik, but the main app icon is by @yusf.
 
 Known Issues
 ------------
