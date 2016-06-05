@@ -1,13 +1,33 @@
 import Cocoa
 
 class PrefsViewController: NSViewController {
+    let fontManager = NSFontManager()
+    
     @IBOutlet weak var targetHostTextField: NSTextField!
     @IBOutlet weak var saveHostButton: NSButton!
     @IBOutlet weak var intervalTextField: NSTextField!
     @IBOutlet weak var startStopButton: NSButtonCell!
     @IBOutlet weak var statusTextField: NSTextField!
-    @IBOutlet weak var lagTextField: NSTextField!
-    @IBOutlet weak var packetLossTextField: NSTextField!
+    
+    @IBOutlet weak var lagTextField: NSTextField! {
+        didSet {
+            if #available(OSX 10.11, *) {
+                if let font = lagTextField.font {
+                    lagTextField.font = NSFont.monospacedDigitSystemFontOfSize(font.pointSize, weight: CGFloat(fontManager.weightOfFont(font)))
+                }
+            }
+        }
+    }
+    
+    @IBOutlet weak var packetLossTextField: NSTextField! {
+        didSet {
+            if #available(OSX 10.11, *) {
+                if let font = packetLossTextField.font {
+                    packetLossTextField.font = NSFont.monospacedDigitSystemFontOfSize(font.pointSize, weight: CGFloat(fontManager.weightOfFont(font)))
+                }
+            }
+        }
+    }
     
     var currentStatus: Status? {
         didSet {
