@@ -50,12 +50,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func buildMenu(helper: PingHelper) -> NSMenu {
         let menu = NSMenu()
         
-        let startStopMenuTitle = helper.running ? "Pause" : "Start"
-        
         let statusMenuItem = NSMenuItem(title: "Status: \(helper.status)", action: nil, keyEquivalent: "")
         statusMenuItem.tag = StatusMenuItemTag
         
-        let startStopMenuItem = NSMenuItem(title: startStopMenuTitle,  action: #selector(AppDelegate.startStopPing(_:)), keyEquivalent: "")
+        let startStopMenuItem = NSMenuItem(title: "Start",  action: #selector(AppDelegate.startStopPing(_:)), keyEquivalent: "")
         startStopMenuItem.representedObject = helper
         startStopMenuItem.tag = StartStopMenuItemTag
         
@@ -66,6 +64,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem.separatorItem())
         menu.addItem(NSMenuItem(title: "Quit PingThing", action: #selector(NSApplication.sharedApplication().terminate), keyEquivalent: ""))
         
+        updateMenus(fromHelper: helper)
+
         return menu
     }
     
@@ -115,7 +115,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             
             if let startStopMenu = menu.itemWithTag(StartStopMenuItemTag) {
-                startStopMenu.title = helper.running ? "Stop" : "Start"
+                startStopMenu.title = helper.running ? "Pause" : "Start"
             }
         }
     }
