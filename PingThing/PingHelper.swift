@@ -33,7 +33,7 @@ class PingHelper: NSObject {
     private var pingTimer: NSTimer?
     private var lastSequenceSent: UInt16?
     private var lastSentTime: NSDate?
-    var lagTimes = [Double?]()
+    private(set) var lagTimes = [Double?]()
     private var lastLag: Double? {
         didSet {
             lagTimes.append(lastLag)
@@ -97,7 +97,7 @@ class PingHelper: NSObject {
             stop()
         }
         
-        println("starting…")
+        print("starting…")
         status = Status.Unknown
         simplePing = SimplePing(hostName: host)
             
@@ -112,7 +112,8 @@ class PingHelper: NSObject {
     }
     
     func stop() {
-        println("stopping…")
+        print("stopping…")
+
         if let pinger = simplePing {
             pinger.stop()
         }
@@ -122,7 +123,7 @@ class PingHelper: NSObject {
         running = false
         status = Status.NotRunning
     }
-    
+
     func sendPing() {
         if let pinger = simplePing {
             pinger.sendPingWithData(nil)
@@ -132,15 +133,15 @@ class PingHelper: NSObject {
 
 extension PingHelper: SimplePingDelegate {
     func simplePing(pinger: SimplePing!, didStartWithAddress address: NSData!) {
-        println("did start")
+        print("did start")
         self.sendPing()
         status = Status.Unknown
-        pingTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("sendPing"), userInfo: nil, repeats: true)
+        pingTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(PingHelper.sendPing), userInfo: nil, repeats: true)
     }
     
     func simplePing(pinger: SimplePing!, didFailWithError error: NSError!) {
         status = Status.Failure
-        println("failed with error: \(error)")
+        print("failed with error: \(error)")
     }
     
     func simplePing(pinger: SimplePing!, didSendPacket packet: NSData!, withSequenceNumber sequenceNumber:UInt16) {
@@ -152,7 +153,7 @@ extension PingHelper: SimplePingDelegate {
     
     func simplePing(pinger: SimplePing!, didFailToSendPacket packet: NSData!, error: NSError!) {
         status = Status.Error
-        println("failed to send packet")
+        print("failed to send packet")
     }
     
     func simplePing(pinger: SimplePing!, didReceivePingResponsePacket packet: NSData!) {
@@ -161,12 +162,12 @@ extension PingHelper: SimplePingDelegate {
         let seqNo = CFSwapInt16BigToHost(SimplePing.icmpInPacket(packet).memory.sequenceNumber)
         
         if seqNo < lastSequenceSent {
-            println("out of order")
+            print("out of order")
         } else {
             if let lastTime = lastSentTime {
                 lastLag = NSDate().timeIntervalSinceDate(lastTime) * 1_000
-                println("pong \(seqNo) - lag \(lastLag)")
-                println("running average: \(averageLag)")
+                print("pong \(seqNo) - lag \(lastLag)")
+                print("running average: \(averageLag)")
             }
         }
     }
@@ -174,4 +175,5 @@ extension PingHelper: SimplePingDelegate {
     func simplePing(pinger: SimplePing!, didReceiveUnexpectedPacket packet: NSData!) {
 //        println("received unexpected packet")
     }
+
 }

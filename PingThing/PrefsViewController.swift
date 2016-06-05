@@ -98,8 +98,8 @@ class PrefsViewController: NSViewController {
     }
     
     @IBAction func launchAtLoginCheckbox(sender: NSButton) {
-        println("Launch at login checkbox checked")
-        println("Value: \(sender.state)")
+        print("Launch at login checkbox checked")
+        print("Value: \(sender.state)")
     }
     
     override func viewWillAppear() {
@@ -157,5 +157,4 @@ class PrefsViewController: NSViewController {
         defaults.setObject(helper.interval, forKey: PingIntervalUserDefaultsKey)
         defaults.synchronize()
     }
-    
 }

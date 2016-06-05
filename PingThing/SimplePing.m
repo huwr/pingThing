@@ -56,7 +56,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <errno.h>
-#import "PingThing-Swift.h"
+//#import "PingThing-Swift.h"
 
 #pragma mark * ICMP On-The-Wire Format
 

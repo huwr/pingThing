@@ -14,8 +14,7 @@ let PingIntervalUserDefaultsKey = "ping-interval"
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    //bug in XCode :( - NSSquareStatusItemLength == -2
-    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-2)
+    let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(NSSquareStatusItemLength)
     
     let StatusMenuItemTag = 0
     let StartStopMenuItemTag = 1
@@ -61,16 +60,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let statusMenuItem = NSMenuItem(title: "Status: \(helper.status)", action: nil, keyEquivalent: "")
         statusMenuItem.tag = StatusMenuItemTag
         
-        let startStopMenuItem = NSMenuItem(title: startStopMenuTitle,  action: Selector("startStopPing:"), keyEquivalent: "")
+        let startStopMenuItem = NSMenuItem(title: startStopMenuTitle,  action: #selector(AppDelegate.startStopPing(_:)), keyEquivalent: "")
         startStopMenuItem.representedObject = helper
         startStopMenuItem.tag = StartStopMenuItemTag
         
         menu.addItem(statusMenuItem)
         menu.addItem(NSMenuItem.separatorItem())
         menu.addItem(startStopMenuItem)
-        menu.addItem(NSMenuItem(title: "Preferences…", action: Selector("openPrefsWindow:"), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Preferences…", action: #selector(AppDelegate.openPrefsWindow(_:)), keyEquivalent: ""))
         menu.addItem(NSMenuItem.separatorItem())
-        menu.addItem(NSMenuItem(title: "Quit PingThing", action: Selector("terminate:"), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Quit PingThing", action: #selector(NSApplication.sharedApplication().terminate), keyEquivalent: ""))
         
         return menu
     }
