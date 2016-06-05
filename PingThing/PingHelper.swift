@@ -21,9 +21,7 @@ enum Status: String {
 }
 
 class PingHelper: NSObject {
-    static let DefaultHost = "8.8.8.8"
-    static let DefaultInterval = 2.0
-    static let DefaultNumberOfSamples = 10
+    private static let DefaultNumberOfSamples = 10
     
     var host: String
     var interval: Double

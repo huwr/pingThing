@@ -11,6 +11,9 @@ import Cocoa
 let TargetHostUserDefaultsKey = "target-host"
 let PingIntervalUserDefaultsKey = "ping-interval"
 
+let DefaultHost = "8.8.8.8"
+let DefaultInterval = 2.0
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
@@ -19,8 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let StatusMenuItemTag = 0
     let StartStopMenuItemTag = 1
     
-    var host: String = PingHelper.DefaultHost
-    var interval: Double = PingHelper.DefaultInterval
+    var host: String = DefaultHost
+    var interval: Double = DefaultInterval
     
     private(set)
     var pingHelper: PingHelper?
