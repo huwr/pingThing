@@ -19,18 +19,20 @@ class PrefsViewController: NSViewController {
     
     var currentStatus: Status? {
         didSet {
-            if let status = currentStatus {
-                statusTextField.stringValue = status.rawValue
-                switch status {
-                case .Success:
-                    statusTextField.textColor = NSColor(calibratedRed: 0, green: 149/255.0, blue: 0, alpha: 1)
-                case .Failure:
-                    statusTextField.textColor = NSColor.orangeColor()
-                case .Error:
-                    statusTextField.textColor = NSColor.redColor()
-                default:
-                    statusTextField.textColor = NSColor.blackColor()
-                }
+            guard let status = currentStatus else {
+                return
+            }
+
+            statusTextField.stringValue = status.rawValue
+            switch status {
+            case .Success:
+                statusTextField.textColor = NSColor(calibratedRed: 0, green: 149/255.0, blue: 0, alpha: 1)
+            case .Failure:
+                statusTextField.textColor = NSColor.orangeColor()
+            case .Error:
+                statusTextField.textColor = NSColor.redColor()
+            default:
+                statusTextField.textColor = NSColor.blackColor()
             }
         }
     }
@@ -62,11 +64,12 @@ class PrefsViewController: NSViewController {
     var pingHelper: PingHelper?
     
     @IBAction func intervalTextFieldChanged(sender: NSTextField) {
-        if let helper = pingHelper {
-            helper.interval = intervalTextField.doubleValue
-            helper.start()
-            savePrefs(fromPingHelper: helper)
+        guard let helper = pingHelper else {
+            return
         }
+        helper.interval = intervalTextField.doubleValue
+        helper.start()
+        savePrefs(fromPingHelper: helper)
     }
     
     @IBAction func quit(sender: AnyObject) {
@@ -78,22 +81,26 @@ class PrefsViewController: NSViewController {
     }
     
     @IBAction func saveHostButtonPressed(sender: NSButton) {
-        if let helper = pingHelper {
-            statusTextField.stringValue = "Starting…"
-            statusTextField.textColor = NSColor.blackColor()
-            helper.host = targetHostTextField.stringValue
-            helper.start()
-            savePrefs(fromPingHelper: helper)
+        guard let helper = pingHelper else {
+            return
         }
+        
+        statusTextField.stringValue = "Starting…"
+        statusTextField.textColor = NSColor.blackColor()
+        helper.host = targetHostTextField.stringValue
+        helper.start()
+        savePrefs(fromPingHelper: helper)
     }
     
     @IBAction func startStopButtonPressed(sender: NSButtonCell) {
-        if let helper = pingHelper {
-            if helper.running {
-                helper.stop()
-            } else {
-                helper.start()
-            }
+        guard let helper = pingHelper else {
+            return
+        }
+        
+        if helper.running {
+            helper.stop()
+        } else {
+            helper.start()
         }
     }
     
