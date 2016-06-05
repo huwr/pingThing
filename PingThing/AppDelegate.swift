@@ -58,7 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func buildMenu(helper: PingHelper) -> NSMenu {
         let menu = NSMenu()
         
-        let startStopMenuTitle = helper.running ? "Stop" : "Start"
+        let startStopMenuTitle = helper.running ? "Pause" : "Start"
         
         let statusMenuItem = NSMenuItem(title: "Status: \(helper.status)", action: nil, keyEquivalent: "")
         statusMenuItem.tag = StatusMenuItemTag

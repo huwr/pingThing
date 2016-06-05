@@ -124,7 +124,7 @@ class PrefsViewController: NSViewController {
         currentStatus = pingHelper.status
         currentLag = pingHelper.averageLag
         currentLoss = pingHelper.dropOutRate
-        startStopButton.title = pingHelper.running ? "Stop" : "Start"
+        startStopButton.title = pingHelper.running ? "Pause" : "Start"
     }
     
     private func updateViewControls(fromPingHelper pingHelper: PingHelper) {
