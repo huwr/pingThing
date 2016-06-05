@@ -70,28 +70,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func listenToPings(helper: PingHelper) {
-        NSNotificationCenter.defaultCenter().addObserverForName(StatusChangedNotification,
-            object: helper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateMenus(fromHelper: helper)
-                }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PingStartedNotification,
-            object: helper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateMenus(fromHelper: helper)
-                }
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(PingStoppedNotification,
-            object: helper,
-            queue: NSOperationQueue.mainQueue()) { [weak self] notification in
-                if let strongSelf = self {
-                    strongSelf.updateMenus(fromHelper: helper)
-                }
+        [StatusChangedNotification, PingStartedNotification, PingStoppedNotification].forEach { notification in
+            NSNotificationCenter.defaultCenter().addObserverForName(notification, object: helper,
+                queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
+                    self.updateMenus(fromHelper: helper)
+            }
         }
     }
     
