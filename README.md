@@ -1,4 +1,4 @@
-PingThing
+PingThing ![Icon](https://raw.githubusercontent.com/huwr/pingThing/master/PingThing/Images.xcassets/AppIcon.appiconset/icon_128x128.png "PingThign icon") 
 =========
 
 A little Mac app that sits in your menu bar and pings things.  It does not do very much else.  You get continuous feedback about the results.  The status icon changes depending on the results of the pings.
