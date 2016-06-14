@@ -13,6 +13,7 @@ Known Issues
 ------------
 
 * The 'Launch at Login' checkbox is not implemented - you will have to add it to your Login Items in System Preferences manually.
+* Does not test connectivity correctly when connectivity is precluded by the network. That's difficult to control for; perhaps there could be a TCP ACK test.
 
 Future Plans
 ------------
