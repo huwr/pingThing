@@ -177,15 +177,17 @@
 			attributes = {
 				LastSwiftMigration = 0730;
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "DiUS Computing Pty Ltd";
 				TargetAttributes = {
 					552F209E1B1D292B00AE69B3 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = NU7Z2275VX;
+						LastSwiftMigration = 0800;
 					};
 					552F20AE1B1D292B00AE69B3 = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 552F209E1B1D292B00AE69B3;
 					};
 				};
@@ -370,6 +372,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PingThing/PingThing-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -387,6 +390,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PingThing/PingThing-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -408,6 +413,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.dius.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PingThing/PingThing-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PingThing.app/Contents/MacOS/PingThing";
 			};
 			name = Debug;
@@ -426,6 +432,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.dius.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PingThing/PingThing-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PingThing.app/Contents/MacOS/PingThing";
 			};
 			name = Release;

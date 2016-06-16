@@ -13,7 +13,7 @@ class PrefsViewController: NSViewController {
         didSet {
             if #available(OSX 10.11, *) {
                 if let font = lagTextField.font {
-                    lagTextField.font = NSFont.monospacedDigitSystemFontOfSize(font.pointSize, weight: CGFloat(fontManager.weightOfFont(font)))
+                    lagTextField.font = NSFont.monospacedDigitSystemFont(ofSize: font.pointSize, weight: CGFloat(fontManager.weight(of: font)))
                 }
             }
         }
@@ -23,7 +23,7 @@ class PrefsViewController: NSViewController {
         didSet {
             if #available(OSX 10.11, *) {
                 if let font = packetLossTextField.font {
-                    packetLossTextField.font = NSFont.monospacedDigitSystemFontOfSize(font.pointSize, weight: CGFloat(fontManager.weightOfFont(font)))
+                    packetLossTextField.font = NSFont.monospacedDigitSystemFont(ofSize: font.pointSize, weight: CGFloat(fontManager.weight(of: font)))
                 }
             }
         }
@@ -40,11 +40,11 @@ class PrefsViewController: NSViewController {
             case .Success:
                 statusTextField.textColor = NSColor(calibratedRed: 0, green: 149/255.0, blue: 0, alpha: 1)
             case .Failure:
-                statusTextField.textColor = NSColor.orangeColor()
+                statusTextField.textColor = NSColor.orange()
             case .Error:
-                statusTextField.textColor = NSColor.redColor()
+                statusTextField.textColor = NSColor.red()
             default:
-                statusTextField.textColor = NSColor.blackColor()
+                statusTextField.textColor = NSColor.black()
             }
         }
     }
@@ -53,10 +53,10 @@ class PrefsViewController: NSViewController {
         didSet {
             if let lag = currentLag {
                 lagTextField.stringValue = String(format: "%.3f ms", lag)
-                lagTextField.textColor = NSColor.blackColor()
+                lagTextField.textColor = NSColor.black()
             } else {
                 lagTextField.stringValue = "No data"
-                lagTextField.textColor = NSColor.darkGrayColor()
+                lagTextField.textColor = NSColor.darkGray()
             }
         }
     }
@@ -65,17 +65,17 @@ class PrefsViewController: NSViewController {
         didSet {
             if let loss = currentLoss {
                 packetLossTextField.stringValue = String(format: "%3.2f%%", loss * 100)
-                packetLossTextField.textColor = NSColor.blackColor()
+                packetLossTextField.textColor = NSColor.black()
             } else {
                 packetLossTextField.stringValue = "No data"
-                packetLossTextField.textColor = NSColor.darkGrayColor()
+                packetLossTextField.textColor = NSColor.darkGray()
             }
         }
     }
     
     var pingHelper: PingHelper?
     
-    @IBAction func intervalTextFieldChanged(sender: NSTextField) {
+    @IBAction func intervalTextFieldChanged(_ sender: NSTextField) {
         guard let helper = pingHelper else {
             return
         }
@@ -84,27 +84,27 @@ class PrefsViewController: NSViewController {
         savePrefs(fromPingHelper: helper)
     }
     
-    @IBAction func quit(sender: AnyObject) {
-        NSApplication.sharedApplication().terminate(self)
+    @IBAction func quit(_ sender: AnyObject) {
+        NSApplication.shared().terminate(self)
     }
     
-    @IBAction func targetHostTextFieldChanged(sender: NSTextField) {
+    @IBAction func targetHostTextFieldChanged(_ sender: NSTextField) {
         saveHostButton.performClick(self)
     }
     
-    @IBAction func saveHostButtonPressed(sender: NSButton) {
+    @IBAction func saveHostButtonPressed(_ sender: NSButton) {
         guard let helper = pingHelper else {
             return
         }
         
         statusTextField.stringValue = "Starting…"
-        statusTextField.textColor = NSColor.blackColor()
+        statusTextField.textColor = NSColor.black()
         helper.host = targetHostTextField.stringValue
         helper.start()
         savePrefs(fromPingHelper: helper)
     }
     
-    @IBAction func startStopButtonPressed(sender: NSButtonCell) {
+    @IBAction func startStopButtonPressed(_ sender: NSButtonCell) {
         guard let helper = pingHelper else {
             return
         }
@@ -116,13 +116,13 @@ class PrefsViewController: NSViewController {
         }
     }
     
-    @IBAction func launchAtLoginCheckbox(sender: NSButton) {
+    @IBAction func launchAtLoginCheckbox(_ sender: NSButton) {
         print("Launch at login checkbox checked")
         print("Value: \(sender.state)")
     }
     
     override func viewWillAppear() {
-        if let appDelegate = NSApplication.sharedApplication().delegate as? AppDelegate {
+        if let appDelegate = NSApplication.shared().delegate as? AppDelegate {
             pingHelper = appDelegate.pingHelper
         }
         
@@ -135,7 +135,7 @@ class PrefsViewController: NSViewController {
     
     override func viewWillDisappear() {
         if let helper = pingHelper {
-            NSNotificationCenter.defaultCenter().removeObserver(helper)
+            NotificationCenter.default().removeObserver(helper)
         }
     }
     
@@ -154,16 +154,21 @@ class PrefsViewController: NSViewController {
     private func listenToPings(onPingHelper pingHelper: PingHelper) {
         
         [StatusChangedNotification, PingStartedNotification, PingStoppedNotification].forEach { notification in
-            NSNotificationCenter.defaultCenter().addObserverForName(notification, object: pingHelper,
-                queue: NSOperationQueue.mainQueue()) { [unowned self] _ in
+            
+            
+            
+            NotificationCenter.default().addObserver(forName: notification, object: pingHelper,
+                queue: OperationQueue.main()) { [unowned self] _ in
                     self.updateViewStatus(fromPingHelper: pingHelper)
             }
+            
+            
         }
     }
     
-    private func savePrefs(fromPingHelper helper: PingHelper, usingDefaults defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
-        defaults.setObject(helper.host, forKey: TargetHostUserDefaultsKey)
-        defaults.setObject(helper.interval, forKey: PingIntervalUserDefaultsKey)
+    private func savePrefs(fromPingHelper helper: PingHelper, usingDefaults defaults: UserDefaults = UserDefaults.standard()) {
+        defaults.set(helper.host, forKey: TargetHostUserDefaultsKey)
+        defaults.set(helper.interval, forKey: PingIntervalUserDefaultsKey)
         defaults.synchronize()
     }
 }
