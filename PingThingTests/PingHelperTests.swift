@@ -6,10 +6,6 @@ class PingHelperTests: XCTestCase {
     let testHost = "www.example.com"
     let testInterval = 40.0
     let testSamples = 100
-
-//    override func setUp() {
-//        super.setUp()
-//    }
     
     func testInit() {
         let pingHelper = PingHelper(host: testHost, interval: testInterval, numberOfSamples: testSamples)

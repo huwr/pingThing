@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="195"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1177"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="-1" width="480" height="195"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -207,7 +207,6 @@
         <viewController id="jTv-hr-N8H" customClass="PrefsViewController" customModule="PingThing" customModuleProvider="target">
             <connections>
                 <outlet property="intervalTextField" destination="LdG-4P-yUQ" id="UH7-7g-d7W"/>
-                <outlet property="lagLabel" destination="7PX-Qe-Onr" id="nGA-wY-bve"/>
                 <outlet property="lagTextField" destination="7PX-Qe-Onr" id="iBK-Nj-e7u"/>
                 <outlet property="packetLossTextField" destination="GtV-4y-dMU" id="D95-Ab-jhD"/>
                 <outlet property="saveHostButton" destination="bzG-ll-bLc" id="CTh-Ur-TWS"/>
