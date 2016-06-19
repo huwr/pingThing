@@ -100,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if let startStopMenu = menu.item(withTag: StartStopMenuItemTag) {
                 startStopMenu.title = helper.running ? "Pause" : "Start"
             }
-        }
+        }    
     }
     
     func startStopPing(_ sender: NSMenuItem) {

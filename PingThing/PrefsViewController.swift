@@ -152,17 +152,11 @@ class PrefsViewController: NSViewController {
     }
     
     private func listenToPings(onPingHelper pingHelper: PingHelper) {
-        
         [StatusChangedNotification, PingStartedNotification, PingStoppedNotification].forEach { notification in
-            
-            
-            
             NotificationCenter.default().addObserver(forName: notification, object: pingHelper,
                 queue: OperationQueue.main()) { [unowned self] _ in
                     self.updateViewStatus(fromPingHelper: pingHelper)
             }
-            
-            
         }
     }
     
